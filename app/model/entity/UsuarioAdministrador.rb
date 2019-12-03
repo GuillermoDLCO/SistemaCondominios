@@ -1,4 +1,6 @@
+require 'time'
 require_relative 'Persona'
+require_relative '../../../app/repositories/HabitacionRepository'
 
 class UsuarioAdministrador < Persona
   attr_accessor :arregloCondominios
@@ -12,16 +14,36 @@ class UsuarioAdministrador < Persona
   end
 
   def registrarServicio(condominio, servicio)
-    condominio.registarServicio(servicio)
+    condominio.registrarServicio(servicio)
   end
 
-  def registrarHabitacionCondominio(condominio, habitacion)
-    habitacion.propietario.asignarHabitacion(habitacion)
-    condominio.registrarHabitacion(habitacion)
+  def registrarVisita(condominio, visita)
+    condominio.registrarVisita(visita)
   end
 
-  def registrarPagoServicioPorHabitacion(condominio)
+  def registrarHabitacionCondominio(condominio)
+    habitaciones = HabitacionRepository.new.cargarHabitaciones
+    for h in habitaciones
+      condominio.registrarHabitacion(h)
+    end
+  end
+
+  def registrarHabitacionPropietario(habitacion, propietario)
+    propietario.asignarHabitacion(habitacion)
+    habitacion.registrarPropietario(propietario)
+  end
+
+  def liberarHabitacion(habitacion,propietario)
+    propietario.habitacion = nil
+    habitacion.propietario = nil
+  end
+
+  def registrarCuentasPagoServicioPorHabitacion(condominio)
     condominio.generarCuentasServicioPorHabitacion
+  end
+
+  def registrarPagoServicioPorHabitacion(condominio, habitacion, estadoCuenta)
+    return condominio.registrarPagoServicioHabitacion(habitacion,estadoCuenta)
   end
 
   def obtenerVisitasPorFecha(condominio, fecha)
@@ -49,12 +71,21 @@ class UsuarioAdministrador < Persona
     return arregloVisitasEncontradas
   end
 
+  def obtenerVisitasPorHabitacion(condominio,habitacion)
+    for v in condominio.arregloVisitas
+      if v.habitacion.numeroHabitacion == habitacion.numeroHabitacion
+        arregloVisitasEncontradas << v
+      end
+    end
+  end
+
   def obtenerPagoServiciosPorDNI(condominio, dni)
     for h in condominio
       if h.propietario.dni == dni
         return h.arregloEstadoCuenta
       end
     end
+    return nil
   end
 
   def consultaPagoServiciosPorHabitacion(numeroHabitacion)
@@ -63,6 +94,7 @@ class UsuarioAdministrador < Persona
         return h.arregloEstadoCuenta
       end
     end
+    return nil
   end
 
   def consultaDeudoresServicios(condominio)

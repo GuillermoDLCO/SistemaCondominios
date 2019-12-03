@@ -1,13 +1,14 @@
 class Habitacion
-  @@id_static
-  attr_accessor :id, :numeroHabitacion, :propietario, :fecha, :arregloFamiliares, :arregloEstadoCuenta
+  @@id_static = 0
+  attr_accessor :id, :numeroHabitacion, :propietario, :fecha, :arregloFamiliares, :arregloEstadoCuenta, :isDisponible
 
   def initialize(numeroHabitacion, propietario, fecha)
     @@id_static += 1
     @id = @@id_static
-    @numeroHabitacion, @propietario, @fecha = id, numeroHabitacion, propietario, fecha
+    @numeroHabitacion, @propietario, @fecha = numeroHabitacion, propietario, fecha
     @arregloFamiliares = []
     @arregloEstadoCuenta = []
+    @isDisponible = true
   end
 
   def registrarEstadoCuentaServicio(estadoCuentaServicio)
@@ -16,5 +17,14 @@ class Habitacion
 
   def registrarFamiliar(familiar)
     arregloFamiliares << familiar
+  end
+
+  def registrarPropietario(persona)
+    self.isDisponible = false
+    self.propietario = persona
+  end
+
+  def pagarEstadoCuenta(estadoCuenta)
+    estadoCuenta.pagarCuenta
   end
 end

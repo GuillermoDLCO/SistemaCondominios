@@ -1,3 +1,5 @@
+require_relative '../entity/EstadoCuentaServicio'
+
 class Condominio
   @@id_static = 0
 
@@ -28,19 +30,33 @@ class Condominio
   def calcularPagoServicioPorHabitacion
     totalServicio = 0
     for s in arregloServicios
+      puts "costos " + s.costo.to_s
       totalServicio += s.costo
     end
-
-    pagoPorHabitacion = (totalServicio * 1.0 / arregloHabitaciones.length).round(2)
+    cantidadHabitacionesOcupadas = 0
+    for h in arregloHabitaciones
+      if h.isDisponible == false
+        cantidadHabitacionesOcupadas += 1
+      end
+    end
+    pagoPorHabitacion = (totalServicio * 1.0 / cantidadHabitacionesOcupadas).round(2)
 
     return pagoPorHabitacion
   end
 
   def generarCuentasServicioPorHabitacion
     t = Time.now
-    estadoCuentaMes = EstadoCuentaServicio.new(Time.now, calcularPagoServicioPorHabitacion,"Pago por concepto de servicios", "Pendiente")
+
     for h in arregloHabitaciones
-      h.registrarEstadoCuentaServicio(estadoCuentaMes)
+      if h.isDisponible == false
+        estadoCuentaMes = EstadoCuentaServicio.new(Time.now, calcularPagoServicioPorHabitacion,"Pago por concepto de servicios", "Pendiente")
+        h.registrarEstadoCuentaServicio(estadoCuentaMes)
+      end
     end
+    return EstadoCuentaServicio.new(Time.now, calcularPagoServicioPorHabitacion,"Pago por concepto de servicios", "Pendiente")
+  end
+
+  def registrarPagoServicioHabitacion(habitacion, estadoCuenta)
+    habitacion.pagarEstadoCuenta(estadoCuenta)
   end
 end
