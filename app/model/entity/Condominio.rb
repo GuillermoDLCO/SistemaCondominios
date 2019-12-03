@@ -30,7 +30,6 @@ class Condominio
   def calcularPagoServicioPorHabitacion
     totalServicio = 0
     for s in arregloServicios
-      puts "costos " + s.costo.to_s
       totalServicio += s.costo
     end
     cantidadHabitacionesOcupadas = 0

@@ -72,6 +72,7 @@ class UsuarioAdministrador < Persona
   end
 
   def obtenerVisitasPorHabitacion(condominio,habitacion)
+    arregloVisitasEncontradas = []
     for v in condominio.arregloVisitas
       if v.habitacion.numeroHabitacion == habitacion.numeroHabitacion
         arregloVisitasEncontradas << v
@@ -80,7 +81,7 @@ class UsuarioAdministrador < Persona
   end
 
   def obtenerPagoServiciosPorDNI(condominio, dni)
-    for h in condominio
+    for h in condominio.arregloHabitaciones
       if h.propietario.dni == dni
         return h.arregloEstadoCuenta
       end
@@ -88,8 +89,8 @@ class UsuarioAdministrador < Persona
     return nil
   end
 
-  def consultaPagoServiciosPorHabitacion(numeroHabitacion)
-    for h in condominio
+  def consultaPagoServiciosPorHabitacion(condominio, numeroHabitacion)
+    for h in condominio.arregloHabitaciones
       if h.numeroHabitacion == numeroHabitacion
         return h.arregloEstadoCuenta
       end
@@ -99,7 +100,7 @@ class UsuarioAdministrador < Persona
 
   def consultaDeudoresServicios(condominio)
     arregloDeudores = []
-    for h in condominio
+    for h in condominio.arregloHabitaciones
       for ec in h.arregloEstadoCuenta
         if ec.estadoPago == "Pendiente"
           arregloDeudores << h.propietario

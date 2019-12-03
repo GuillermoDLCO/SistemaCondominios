@@ -199,7 +199,7 @@ class CondominioView < BaseView
     costoServicio = gets.chomp.to_f
     servicio = Servicio.new(nombreServicio,costoServicio)
     limpiarConsola
-    show_message("Nombre servicio: #{servicio.nombre}, costo: #{servicio.costo.to_s}")
+    show_message("\nNombre servicio: #{servicio.nombre}, costo: #{servicio.costo.to_s}")
     show_message("Registrado")
     return servicio
   end
@@ -221,7 +221,7 @@ class CondominioView < BaseView
     visita = Visita.new(fecha,habitacion)
     visita.registrarVisitante(visitante)
     limpiarConsola
-    show_message("Visita: nombre: #{visitante.nombre}, fecha: #{visita.fecha}")
+    show_message("\nVisita: nombre: #{visitante.nombre}, fecha: #{visita.fecha}")
     show_message("Registrado")
     return visita
   end
@@ -362,7 +362,7 @@ class CondominioView < BaseView
     show_message('Propietarios deudores')
     show_message('================================')
     deudores.each do |deudor|
-      show_message("Deudor nombre: #{deudor.nombre}, apellido: #{deudor.apellido}, dni: #{deudor.dni}")
+      show_message("Deudor nombre: #{deudor.nombre}, apellido: #{deudor.apellidos}, dni: #{deudor.dni}")
     end
   end
 

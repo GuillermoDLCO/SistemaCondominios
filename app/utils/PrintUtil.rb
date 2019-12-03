@@ -1,3 +1,4 @@
+
 class PrintUtil
 
   def self.printMessage(message)

@@ -14,12 +14,14 @@ class LoginControlador
   def mostrar_logueo
     datos = vista.mostrar_login
     repo = UsuarioRepository.new
-    
 
+    begin
       usuario = repo.validar_datos(datos[0], datos[1])
       condominio = CondominioControlador.new(CondominioView.new, usuario)
       condominio.mostrar_opciones
-
+    rescue Exception => e
+      vista.mostrar_error
+    end
 
   end
 

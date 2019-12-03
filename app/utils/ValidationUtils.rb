@@ -1,19 +1,9 @@
+require 'singleton'
+
 class ValidationUtil
 
     def initialize
 
-    end
-
-    def validarTexto(input, tipodato)
-        valida = input[/[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+/] == input
-        raise "Formato del #{tipodato} incorrecto. Solo letras y espacios" if !valida
-        return true
-    end
-
-    def validarAlfanumerico(input, tipodato)
-        valida = input[/[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+/] == input
-        raise "Formato del #{tipodato} incorrecto. Solo letras, números y espacios" if !valida
-        return true
     end
 
     def validarFormatoFecha(input)
@@ -27,17 +17,5 @@ class ValidationUtil
         raise "Formato de DNI ingresado incorrecto. Solo 8 dígitos." if !valida
         return true
     end
-
-    def validarPromedio(input)
-        valida = input[/[0-9]{1,2}+/] == input
-        if (valida == true)
-            if (input.to_i > 10 || input.to_i < 1)
-                valida = false
-            end
-        end
-        raise "Formato de promedio ingresado incorrecto. Solo números del 1 al 10" if !valida
-        return true
-    end
-
 
 end

@@ -94,12 +94,12 @@ class CondominioControlador < BaseControlador
       listarMenuCondominio(condominio)
     when 8 # Consultar visitas por numero de habitacion
       habitacion = vista.mostrarHabitacionesOcupadas
-      visitas = obtenerVisitasPorHabitacion(condominio,habitacion)
+      visitas = usuario.obtenerVisitasPorHabitacion(condominio,habitacion)
       vista.mostrarVisitas(visitas)
       listarMenuCondominio(condominio)
     when 9 # Consultar pagos de servicio por habitacion
       habitacion = vista.mostrarHabitacionesOcupadas
-      estadoCuentas = usuario.consultaPagoServiciosPorHabitacion(habitacion.numeroHabitacion)
+      estadoCuentas = usuario.consultaPagoServiciosPorHabitacion(condominio, habitacion.numeroHabitacion)
       if estadoCuentas != nil
         vista.mostrarEstadoCuentas(estadoCuentas)
       end
