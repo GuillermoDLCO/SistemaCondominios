@@ -1,4 +1,5 @@
 require_relative '../../app/repositories/UsuarioRepository'
+require_relative '../../app/repositories/PropietarioRepository'
 require_relative '../../app/controller/CondominioControlador'
 require_relative '../../app/view/CondominioView'
 
@@ -17,6 +18,11 @@ class LoginControlador
 
     begin
       usuario = repo.validar_datos(datos[0], datos[1])
+      if(usuario.tipo == "Propietario")
+        repoPropietarios = PropietarioRepository.new
+
+        usuario = repoPropietarios.buscarDatosPropietario(usuario.nombre,usuario.dni)
+      end
       condominio = CondominioControlador.new(CondominioView.new, usuario)
       condominio.mostrar_opciones
     rescue Exception => e

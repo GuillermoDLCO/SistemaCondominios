@@ -17,8 +17,8 @@ class CondominioControlador < BaseControlador
       realizar_opcion(opcion)
     rescue Exception => e
       show_message("#{e.message}")
-      puts e.backtrace
       vista.mostrar_error
+      mostrar_opciones
     end
   end
 
@@ -46,6 +46,16 @@ class CondominioControlador < BaseControlador
         vista.salir
       end
     else
+      case opcion
+      when '1'
+        familiar = vista.mostrarRegistroFamiliar
+        usuario.registrarFamiliarHabitacion(familiar)
+        mostrar_opciones
+      when '2'
+        vista.mostrarDatosPropietario(usuario)
+      when '3'
+        vista.salir
+      end
 
     end
 

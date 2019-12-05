@@ -27,4 +27,5 @@ class Habitacion
   def pagarEstadoCuenta(estadoCuenta)
     estadoCuenta.pagarCuenta
   end
+
 end

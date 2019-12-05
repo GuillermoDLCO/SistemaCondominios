@@ -12,6 +12,8 @@ class BaseView
 
     def mostrar_error
         PrintUtil.printMessage("Error, revise la información ingresada")
+        show_message("Presione enter para continuar")
+        gets.chomp
     end
 
     def limpiarConsola

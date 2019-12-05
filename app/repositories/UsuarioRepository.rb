@@ -38,7 +38,7 @@ class UsuarioRepository
       end
     end
 
-    raise if usuarioAux == nil
+    raise "No existe usuario" if usuarioAux == nil
 
     return usuarioAux
   end

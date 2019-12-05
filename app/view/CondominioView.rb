@@ -18,7 +18,7 @@ class CondominioView < BaseView
   def mostrar_opciones(usuario)
 
     opciones_administrador = ['1', '2', '3']
-    opciones_propietario = ['1', '2']
+    opciones_propietario = ['1', '2', '3']
 
     show_message('================================')
     show_message('Menú de opciones')
@@ -30,7 +30,8 @@ class CondominioView < BaseView
       show_message('3 - Salir')
     when 'Propietario'
       show_message('1 - Registrar Familiar')
-      show_message('2 - Salir')
+      show_message('2 - Mostrar datos propietario')
+      show_message('3 - Salir')
     end
 
 
@@ -81,7 +82,8 @@ class CondominioView < BaseView
         self.condominio = c
       end
     end
-    puts "dentro de condo" + self.condominio.arregloHabitaciones[0].numeroHabitacion.to_s
+    # puts "dentro de condo" + self.condominio.arregloHabitaciones[0].numeroHabitacion.to_s
+    limpiarConsola
     return self.condominio
   end
 
@@ -201,6 +203,9 @@ class CondominioView < BaseView
     limpiarConsola
     show_message("\nNombre servicio: #{servicio.nombre}, costo: #{servicio.costo.to_s}")
     show_message("Registrado")
+    show_message("\n\nPresione una enter para continuar")
+    get.chomp
+    limpiarConsola
     return servicio
   end
 
@@ -378,5 +383,40 @@ class CondominioView < BaseView
     for c in cuentas
       show_message("Cuenta codigo: #{c.id}, fecha: #{c.fecha}, cargo: #{c.cargo}, Estado: #{c.estadoPago}")
     end
+  end
+
+  def mostrarRegistroFamiliar
+    limpiarConsola
+
+    show_message('================================')
+    show_message('Registro de Familiar')
+    show_message('================================')
+    show_message('')
+    show_message('Nombre:')
+    nombreFamiliar = gets.chomp
+    show_message('Apellido:')
+    apellidoFamiliar = gets.chomp
+    show_message('DNI:')
+    dniFamiliar = gets.chomp
+    familiar = Persona.new("Familiar",nombreFamiliar, apellidoFamiliar,dniFamiliar)
+    limpiarConsola
+    return familiar
+
+  end
+
+  def mostrarDatosPropietario(usuario)
+    limpiarConsola
+
+    show_message('================================')
+    show_message('Mostrando datos de propietario')
+    show_message('================================')
+    show_message("\n")
+    show_message("Habitacion #{usuario.habitacion.numeroHabitacion}")
+    show_message("Datos de familiares:")
+    for h in usuario.habitacion.arregloFamiliares
+      show_message("\tNombre: #{h.nombre} Apellido: #{h.apellidos} DNI: #{h.dni}")
+    end
+    show_message("\nPresione enter para coninuar")
+    gets.chomp
   end
 end
