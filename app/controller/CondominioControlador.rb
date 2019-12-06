@@ -53,6 +53,7 @@ class CondominioControlador < BaseControlador
         mostrar_opciones
       when '2'
         vista.mostrarDatosPropietario(usuario)
+        mostrar_opciones
       when '3'
         vista.salir
       end

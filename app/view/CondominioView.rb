@@ -418,7 +418,7 @@ class CondominioView < BaseView
     for h in usuario.habitacion.arregloFamiliares
       show_message("\tNombre: #{h.nombre} Apellido: #{h.apellidos} DNI: #{h.dni}")
     end
-    show_message("\nPresione enter para coninuar")
+    show_message("\nPresione enter para continuar")
     gets.chomp
   end
 end
