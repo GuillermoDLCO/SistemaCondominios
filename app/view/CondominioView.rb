@@ -204,7 +204,7 @@ class CondominioView < BaseView
     show_message("\nNombre servicio: #{servicio.nombre}, costo: #{servicio.costo.to_s}")
     show_message("Registrado")
     show_message("\n\nPresione una enter para continuar")
-    get.chomp
+    gets.chomp
     limpiarConsola
     return servicio
   end
@@ -254,30 +254,32 @@ class CondominioView < BaseView
     end
     id = nil
 
-    while id == nil || !cuentas.include?(id)
+    while id == nil || cuentas.include?(id)
       puts "Seleccione una codigo de estado cuenta válido para pagar"
       id = gets.chomp
     end
     cuentaAux = nil
     habitacion.arregloEstadoCuenta.each do |h|
-      if h.id == id
+      if h.id == id.to_i
         cuentaAux = h
+        puts h.estadoPago
       end
     end
 
     return cuentaAux
   end
 
-  def mostrarPagoCuenta(estadiCuenta)
+  def mostrarPagoCuenta()
     show_message('================================')
-    show_message('Desea cancelarlo? Escriba Y(Si) o N(No)')
+    show_message('Desea cancelarlo? Escriba 1(Si) o 2(No)')
     show_message('================================')
     resultado = nil
-    while resultado == nil || resultado != "Y" || resultado != "N"
+    while resultado == nil || !resultado == 1 || !resultado == 2
       puts "Seleccione una opcion válido"
-      resultado = gets.chomp
+      resultado = gets.chomp.to_i
     end
-    if resultado == "Y"
+    puts resultado
+    if resultado == 1
       return true
     else
       return false

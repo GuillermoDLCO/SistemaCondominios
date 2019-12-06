@@ -7,7 +7,7 @@ class EstadoCuentaServicio
     @fecha, @cargo, @concepto, @estadoPago = fecha, cargo, concepto, estadoPago
   end
 
-  def pagarCuenta
-    estadoPago = "Pagado"
+  def pagarCuenta()
+    self.estadoPago = "Pagado"
   end
 end

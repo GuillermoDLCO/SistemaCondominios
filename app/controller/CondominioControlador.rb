@@ -86,10 +86,14 @@ class CondominioControlador < BaseControlador
     when 5 # Registrar pago por concepto de Servicios por habitacion
       habitacion = vista.mostrarHabitacionesOcupadas
       estadoCuenta = vista.mostrarCuentas(habitacion)
-      if vista.mostrarPagoCuenta(estadoCuenta)
-        usuario.registrarPagoServicioPorHabitacion(condominio, habitacion, estadoCuenta)
-      else
+      if vista.mostrarPagoCuenta
+        show_message("Se procede a pagar la cuenta")
 
+        usuario.registrarPagoServicioPorHabitacion(condominio, habitacion, estadoCuenta)
+        listarMenuCondominio(condominio)
+      else
+        show_message("No se realiza ninguna accion")
+        listarMenuCondominio(condominio)
       end
     when 6 # Consultar visitas por fechas'
       fecha = vista.mostrarConsultaVisitasPorFecha
